@@ -36,6 +36,9 @@ export class User {
     @Column({nullable:true})
     Instagram:string
 
+    @Column({default:'FAN'})
+    Role:string
+
 
     @OneToOne(
         ()=>BonCommande, bc=>bc.User,

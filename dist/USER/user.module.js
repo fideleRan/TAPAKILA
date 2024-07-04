@@ -30,7 +30,7 @@ exports.UserModule = UserModule = __decorate([
                 global: true,
                 secret: '123',
                 signOptions: {
-                    expiresIn: '1h'
+                    expiresIn: '1d'
                 }
             }),
             typeorm_1.TypeOrmModule.forFeature([

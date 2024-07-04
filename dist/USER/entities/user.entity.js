@@ -60,6 +60,10 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "Instagram", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: 'FAN' }),
+    __metadata("design:type", String)
+], User.prototype, "Role", void 0);
+__decorate([
     (0, typeorm_1.OneToOne)(() => bon_commande_entity_1.BonCommande, bc => bc.User, {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',

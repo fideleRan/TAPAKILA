@@ -33,21 +33,21 @@ let UserController = class UserController {
     async login(createFanDto, response) {
         return this.userService.login(createFanDto, response);
     }
-    verification(request) {
-        return this.userService.verifCookie(request);
-    }
     async logout(response) {
         return this.userService.logout(response);
     }
     findAll() {
         return this.userService.findAll();
     }
-    findOne(emailUser) {
-        return this.userService.findOne(emailUser);
+    findUserEmail(emailUser) {
+        return this.userService.findUserEmail(emailUser);
+    }
+    finUserId(idUser) {
+        console.log(idUser);
+        return this.userService.findUserId(+idUser);
     }
     update(id, updateFanDto, Profile) {
         if (Profile) {
-            console.log(typeof (updateFanDto.Age));
             updateFanDto.Profile = Profile.filename;
         }
         else {
@@ -98,13 +98,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "login", null);
 __decorate([
-    (0, common_1.Get)('verification'),
-    __param(0, (0, common_1.Req)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], UserController.prototype, "verification", null);
-__decorate([
     (0, common_1.Post)('logout'),
     __param(0, (0, common_1.Res)({ passthrough: true })),
     __metadata("design:type", Function),
@@ -123,7 +116,14 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], UserController.prototype, "findOne", null);
+], UserController.prototype, "findUserEmail", null);
+__decorate([
+    (0, common_1.Get)('id/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "finUserId", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     (0, swagger_1.ApiConsumes)('multipart/form-data'),

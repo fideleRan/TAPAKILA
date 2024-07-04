@@ -8,5 +8,6 @@ export declare class Organisateur {
     Tel: string;
     SiteWeb: string;
     Profile: string;
+    Role: string;
     Event: Event[] | number;
 }

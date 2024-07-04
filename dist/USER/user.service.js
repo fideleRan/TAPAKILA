@@ -57,7 +57,7 @@ let UserService = class UserService {
             return {
                 token: token,
                 role: 'FAN',
-                message: "Fan authentifié avec succes"
+                message: "Authentification avec succes"
             };
         }
         else if (verificationEmailorg) {
@@ -73,34 +73,17 @@ let UserService = class UserService {
             };
         }
         else if (!verificationEmailFan || !verificationEmailorg) {
-            throw new common_1.BadRequestException("User not Found");
-        }
-    }
-    async verifCookie(request) {
-        try {
-            const cookie = request.cookies['jwt'];
-            console.log(cookie);
-            if (!cookie)
-                throw new common_1.UnauthorizedException('User unauthorised');
-            const dataCookies = this.jwtService.verifyAsync(cookie);
-            if (!dataCookies)
-                throw new common_1.UnauthorizedException('Cookies User not found');
-            const user = await this.fanRepository.findOneBy({ id: dataCookies['id'] });
-            delete user.Password;
-            return user;
-        }
-        catch (error) {
-            throw new common_1.UnauthorizedException();
+            throw new common_1.BadRequestException("Adresse email incorrecte");
         }
     }
     async logout(response) {
-        response.clearCookie('jwt');
+        response.clearCookie('_auth');
         return { message: 'Logout successful' };
     }
     findAll() {
         return this.fanRepository.find();
     }
-    async findOne(emailUser) {
+    async findUserEmail(emailUser) {
         try {
             return await this.fanRepository.findOneBy({ Email: emailUser });
         }
@@ -108,9 +91,15 @@ let UserService = class UserService {
             throw new common_1.NotFoundException("User not found");
         }
     }
+    async findUserId(idUser) {
+        try {
+            return await this.fanRepository.findOneBy({ id: idUser });
+        }
+        catch (error) {
+            throw new common_1.NotFoundException("User not found");
+        }
+    }
     async update(id, updateFanDto) {
-        console.log('dto');
-        console.log(updateFanDto);
         const fan = await this.fanRepository.findOne({ where: { id } });
         if (!fan)
             throw new common_1.NotFoundException('Fan non trouvé');
@@ -120,9 +109,9 @@ let UserService = class UserService {
             ...updateFanDto,
             Password: fan.Password
         });
-        console.log('data  to updte');
         console.log(dataUpdate);
-        return dataUpdate;
+        await this.fanRepository.update(id, dataUpdate);
+        return { message: "Mise à jours effectuée" };
     }
     async remove(id) {
         try {

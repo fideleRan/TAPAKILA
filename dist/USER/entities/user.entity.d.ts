@@ -11,5 +11,6 @@ export declare class User {
     Facebook: string;
     Twitter: string;
     Instagram: string;
+    Role: string;
     Bon_Commande: BonCommande | number;
 }

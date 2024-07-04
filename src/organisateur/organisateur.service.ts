@@ -36,6 +36,7 @@ export class OrganisateurService {
     return await this.orgRepo.save(organisateur)
   }
 
+  
   //LOGIN
   async login(createOrganisateurDto:CreateOrganisateurDto){
     //Verify email

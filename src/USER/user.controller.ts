@@ -49,11 +49,13 @@ export class UserController {
   async login(@Body() createFanDto: CreateUserDto, @Res({passthrough:true}) response:Response) {
     return this.userService.login(createFanDto,response);
   }
-
+/* 
   @Get('verification')
   verification (@Req() request:Request){
+    console.log(request);
+    
     return this.userService.verifCookie(request)
-  }
+  } */
 
   @Post('logout')
   async logout(@Res({passthrough:true}) response:Response) {
@@ -61,14 +63,19 @@ export class UserController {
   }
 
   @Get()
-  //@UseGuards(JwtGuard)
   findAll() {
     return this.userService.findAll();
   }
 
   @Get(':email')
-  findOne(@Param('email') emailUser: string) {
-    return this.userService.findOne(emailUser);
+  findUserEmail(@Param('email') emailUser: string) {
+    return this.userService.findUserEmail(emailUser);
+  }
+
+  @Get('id/:id')
+  finUserId(@Param('id') idUser: number) {
+    console.log(idUser);
+    return this.userService.findUserId(+idUser);
   }
 
   @Patch(':id')
@@ -102,10 +109,7 @@ export class UserController {
   @UploadedFile() Profile:Express.Multer.File
   ) {
     if (Profile) {
-      console.log(typeof(updateFanDto.Age));
-      
       updateFanDto.Profile=Profile.filename
-
     } else {
       updateFanDto.Profile=updateFanDto.Profile
     }

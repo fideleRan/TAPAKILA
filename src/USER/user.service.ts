@@ -49,37 +49,28 @@ export class UserService {
     const verificationEmailFan = await this.fanRepository.findOne({where:{Email:createFanDto.Email}})
     const verificationEmailorg = await this.orgRepository.findOne({where:{Email:createFanDto.Email}})
 
-   /*  //Compare password
-    if (!(await bcrypt.compare(createFanDto.Password, verificationEmailFan.Password))) throw new BadRequestException("Mot de passe Incorrecte")
-
-      //Generate JWT 
-      const dataUserF = verificationEmailFan
-      delete dataUserF.Password
-      const token = await this.generateToken({...dataUserF})
-  
-      return {
-        token:token,
-        message:"Fan authentifié avec succes"
-    } */
-
     if (verificationEmailFan) {
       //Compare password
-      if (!(await bcrypt.compare(createFanDto.Password, verificationEmailFan.Password))) throw new BadRequestException("Mot de passe Incorrecte")
+      if (!(await bcrypt.compare(createFanDto.Password, verificationEmailFan.Password))) 
+      throw new BadRequestException("Mot de passe Incorrecte")
 
         //Generate JWT 
         const dataUserF = verificationEmailFan
         delete dataUserF.Password
         const token = await this.generateToken({...dataUserF})
-    
+
+        //Stocker le tokken dans '_auth' cookie 
+        //response.cookie('_auth',token,{httpOnly:true} )
         return {
           token:token,
           role:'FAN',
-          message:"Fan authentifié avec succes"
+          message:"Authentification avec succes"
       }
 
     } else if (verificationEmailorg) {
       //Compare password
-      if (!(await bcrypt.compare(createFanDto.Password, verificationEmailorg.Password))) throw new BadRequestException("Mot de passe Incorrecte")
+      if (!(await bcrypt.compare(createFanDto.Password, verificationEmailorg.Password))) 
+        throw new BadRequestException("Mot de passe Incorrecte")
 
         //Generate JWT 
         const dataUserO = verificationEmailorg
@@ -92,32 +83,38 @@ export class UserService {
           message:"Organisateur authentifié avec succes"
       }
     } else if (!verificationEmailFan || !verificationEmailorg){
-      throw new BadRequestException("User not Found")
-    }
-
-    
+      throw new BadRequestException("Adresse email incorrecte")
+    }    
   }
 
   //VERIFICATION COOKIES
-  async verifCookie(request:Request){
-    try {
-      const cookie = request.cookies['jwt']
-      console.log(cookie);
+ /*  async verifCookie(request:Request){
+    try {            
+      const cookie = request.cookies['_auth']
+      console.log(request.cookies);
+      
       if(!cookie) throw new UnauthorizedException('User unauthorised')
-      const dataCookies = this.jwtService.verifyAsync(cookie)
+      const dataCookies = await this.jwtService.verifyAsync(cookie)  
       if(!dataCookies) throw new UnauthorizedException('Cookies User not found')
-      const user = await this.fanRepository.findOneBy({id:dataCookies['id']})
+      
+      console.log(dataCookies.dataUser["id"]);
+      const idUser : number= dataCookies.dataUser["id"]
+      
+      const user = await this.fanRepository.findOneBy({id:idUser})
       delete user.Password
+      //console.log(user);
+      
       return user
 
     } catch (error) {
         throw new UnauthorizedException()
     }
-  }
+  } */
 
   //LOGOUT
   async logout(response:Response){
-    response.clearCookie('jwt')
+    //response.clearCookie('jwt')
+    response.clearCookie('_auth')
     return {message:'Logout successful'}
   }
 
@@ -126,7 +123,7 @@ export class UserService {
     return this.fanRepository.find();
   }
 
-  async findOne(emailUser:string) {
+  async findUserEmail(emailUser:string) {
     try {
       return await this.fanRepository.findOneBy({Email:emailUser})
     } catch (error) {
@@ -134,9 +131,15 @@ export class UserService {
     }
   }
 
+  async findUserId(idUser:number) {
+    try {
+      return await this.fanRepository.findOneBy({id:idUser})
+    } catch (error) {
+      throw new NotFoundException("User not found")
+    }
+  }
+
   async update(id: number, updateFanDto: UpdateFanDto) {
-    console.log('dto');
-    console.log(updateFanDto);
     const fan = await this.fanRepository.findOne({where:{id}})
     if(!fan) throw new NotFoundException('Fan non trouvé')
     
@@ -146,12 +149,11 @@ export class UserService {
       ...updateFanDto,
       Password:fan.Password
     })
-    console.log('data  to updte');
     console.log(dataUpdate);
     
-    //await this.fanRepository.update(id,dataUpdate);
-    //return {message:"Mise à jours effectuée"}
-    return dataUpdate
+    await this.fanRepository.update(id,dataUpdate);
+    return {message:"Mise à jours effectuée"}
+    //return dataUpdate
   }
 
   async remove(id: number) {

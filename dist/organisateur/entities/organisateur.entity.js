@@ -48,6 +48,10 @@ __decorate([
     __metadata("design:type", String)
 ], Organisateur.prototype, "Profile", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: 'ORGANISATEUR' }),
+    __metadata("design:type", String)
+], Organisateur.prototype, "Role", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => event_entity_1.Event, ev => ev.Organisateur, {
         onDelete: "CASCADE",
         onUpdate: 'CASCADE',

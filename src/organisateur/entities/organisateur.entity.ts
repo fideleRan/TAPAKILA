@@ -27,6 +27,9 @@ export class Organisateur {
     @Column({nullable:true})
     Profile:string
 
+    @Column({default:'ORGANISATEUR'})
+    Role:string
+
     @OneToMany(
         () => Event, ev=>ev.Organisateur,
         {
