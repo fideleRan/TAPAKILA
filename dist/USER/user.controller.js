@@ -131,13 +131,10 @@ __decorate([
         schema: {
             type: 'object',
             properties: {
-                Name: { type: 'string', default: 'Fidele' },
                 Username: { type: 'string', default: 'fidele' },
-                Email: { type: 'string' },
                 Age: { type: 'number' },
                 Biography: { type: 'string' },
                 Facebook: { type: 'string' },
-                Twitter: { type: 'string' },
                 Instagram: { type: 'string' },
                 Profile: { type: 'file' }
             }

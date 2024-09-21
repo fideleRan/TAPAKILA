@@ -14,6 +14,7 @@ const bon_commande_entity_1 = require("./entities/bon_commande.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("../USER/entities/user.entity");
 const event_entity_1 = require("../event/entities/event.entity");
+const type_billet_entity_1 = require("../type-billet/entities/type-billet.entity");
 let BonCommandeModule = class BonCommandeModule {
 };
 exports.BonCommandeModule = BonCommandeModule;
@@ -22,7 +23,8 @@ exports.BonCommandeModule = BonCommandeModule = __decorate([
         imports: [typeorm_1.TypeOrmModule.forFeature([
                 bon_commande_entity_1.BonCommande,
                 event_entity_1.Event,
-                user_entity_1.User
+                user_entity_1.User,
+                type_billet_entity_1.TypeBillet
             ])],
         controllers: [bon_commande_controller_1.BonCommandeController],
         providers: [bon_commande_service_1.BonCommandeService],

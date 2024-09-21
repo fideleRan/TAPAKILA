@@ -10,11 +10,20 @@ exports.FavorisModule = void 0;
 const common_1 = require("@nestjs/common");
 const favoris_service_1 = require("./favoris.service");
 const favoris_controller_1 = require("./favoris.controller");
+const typeorm_1 = require("@nestjs/typeorm");
+const user_entity_1 = require("../USER/entities/user.entity");
+const event_entity_1 = require("../event/entities/event.entity");
+const favoris_entity_1 = require("./entities/favoris.entity");
 let FavorisModule = class FavorisModule {
 };
 exports.FavorisModule = FavorisModule;
 exports.FavorisModule = FavorisModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([
+                favoris_entity_1.Favoris,
+                event_entity_1.Event,
+                user_entity_1.User
+            ])],
         controllers: [favoris_controller_1.FavorisController],
         providers: [favoris_service_1.FavorisService],
     })

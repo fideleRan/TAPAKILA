@@ -5,12 +5,14 @@ import { BonCommande } from './entities/bon_commande.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/USER/entities/user.entity';
 import { Event } from 'src/event/entities/event.entity';
+import { TypeBillet } from 'src/type-billet/entities/type-billet.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([
     BonCommande,
     Event,
-    User
+    User,
+    TypeBillet
   ])],
   controllers: [BonCommandeController],
   providers: [BonCommandeService],

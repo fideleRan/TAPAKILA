@@ -35,16 +35,17 @@ let LigneCommandeService = class LigneCommandeService {
         const nameB = verifTB.Name;
         const nbB = +createLigneCommandeDto.nbBillet;
         const unitPrice = +verifTB.Price;
-        const dataLC = await this.lcRepo.create({
+        const dataLC = this.lcRepo.create({
             ...createLigneCommandeDto,
             nameBillet: nameB,
             nbBillet: nbB,
             pu: unitPrice,
-            pt: unitPrice * nbB,
+            montant: unitPrice * nbB,
             Bon_Commande: verifBC,
             Type_Billet: verifTB
         });
         await this.lcRepo.save(dataLC);
+        await this.bcRepo.update(idBC, { TotalPrice: unitPrice * nbB });
         return { status: 200, message: 'Ligne de commande ajouté' };
     }
     findAll() {

@@ -25,7 +25,6 @@ export class TypeBilletController {
   })
   @UseInterceptors(NoFilesInterceptor())
   create(@Param('idEvent') idEvent :string,@Body() createTypeBilletDto: CreateTypeBilletDto) {
-    
     return this.typeBilletService.create(+idEvent,createTypeBilletDto);
   }
 
@@ -35,8 +34,13 @@ export class TypeBilletController {
     return this.typeBilletService.findOne(+id);
   }
 
+  @Get('/billet/:idBillet')
+  findOneBillet(@Param('idBillet') id: string) {
+    return this.typeBilletService.findOneBillet(+id);
+  }
 
-  @Patch(':id')
+
+  @Patch('updateNbBillet/:id')
   update(@Param('id') id: string, @Body() updateTypeBilletDto: UpdateTypeBilletDto) {
     return this.typeBilletService.update(+id, updateTypeBilletDto);
   }

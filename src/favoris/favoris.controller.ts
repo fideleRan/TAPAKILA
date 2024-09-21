@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { FavorisService } from './favoris.service';
 import { CreateFavorisDto } from './dto/create-favoris.dto';
 import { UpdateFavorisDto } from './dto/update-favoris.dto';
@@ -10,8 +10,9 @@ export class FavorisController {
   constructor(private readonly favorisService: FavorisService) {}
 
   @Post()
-  create(@Body() createFavorisDto: CreateFavorisDto) {
-    return this.favorisService.create(createFavorisDto);
+  create(@Query('idEvent') idEvent:string,@Query('idUser') idUser:string, @Body() CreateFavorisDto:CreateFavorisDto) {
+    
+    return this.favorisService.create(+idEvent, +idUser,CreateFavorisDto);
   }
 
   @Get()

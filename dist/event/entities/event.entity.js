@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Event = void 0;
 const bon_commande_entity_1 = require("../../bon_commande/entities/bon_commande.entity");
+const commentaire_entity_1 = require("../../commentaire/entities/commentaire.entity");
+const favoris_entity_1 = require("../../favoris/entities/favoris.entity");
 const lieu_entity_1 = require("../../lieu/entities/lieu.entity");
 const organisateur_entity_1 = require("../../organisateur/entities/organisateur.entity");
 const type_billet_entity_1 = require("../../type-billet/entities/type-billet.entity");
@@ -55,6 +57,14 @@ __decorate([
     __metadata("design:type", String)
 ], Event.prototype, "Heure_Fin", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], Event.prototype, "Age", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], Event.prototype, "Etoile", void 0);
+__decorate([
     (0, typeorm_1.Column)({ nullable: true, default: "A venir" }),
     __metadata("design:type", String)
 ], Event.prototype, "status", void 0);
@@ -80,7 +90,15 @@ __decorate([
     __metadata("design:type", Object)
 ], Event.prototype, "Type_Billet", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => bon_commande_entity_1.BonCommande, bc => bc.Event, {
+    (0, typeorm_1.OneToMany)(() => commentaire_entity_1.Commentaire, tb => tb.Event, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        orphanedRowAction: "nullify"
+    }),
+    __metadata("design:type", Object)
+], Event.prototype, "Commentaire", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => bon_commande_entity_1.BonCommande, bc => bc.Event, {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         orphanedRowAction: 'nullify'
@@ -96,6 +114,14 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], Event.prototype, "Lieu", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => favoris_entity_1.Favoris, ev => ev.Event, {
+        onDelete: "CASCADE",
+        onUpdate: 'CASCADE',
+        orphanedRowAction: 'nullify'
+    }),
+    __metadata("design:type", Object)
+], Event.prototype, "Favoris", void 0);
 exports.Event = Event = __decorate([
     (0, typeorm_1.Entity)('event')
 ], Event);

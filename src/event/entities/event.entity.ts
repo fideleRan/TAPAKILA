@@ -1,8 +1,10 @@
 import { BonCommande } from "src/bon_commande/entities/bon_commande.entity";
+import { Commentaire } from "src/commentaire/entities/commentaire.entity";
+import { Favoris } from "src/favoris/entities/favoris.entity";
 import { Lieu } from "src/lieu/entities/lieu.entity";
 import { Organisateur } from "src/organisateur/entities/organisateur.entity";
 import { TypeBillet } from "src/type-billet/entities/type-billet.entity";
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('event')
 export class Event {
@@ -33,6 +35,12 @@ export class Event {
     @Column({nullable:true})
     Heure_Fin:string
 
+    @Column({default:0})
+    Age:number
+
+    @Column({default:0})
+    Etoile:number
+
     @Column({nullable:true,default:"A venir"})
     status:string
 
@@ -60,7 +68,17 @@ export class Event {
     )
     Type_Billet:TypeBillet[] | number
 
-    @OneToOne(
+    @OneToMany(
+        ()=>Commentaire, tb => tb.Event,
+        {
+            onDelete:"CASCADE",
+            onUpdate:"CASCADE",
+            orphanedRowAction:"nullify"
+        }
+    )
+    Commentaire:Commentaire[] | number
+
+    @ManyToOne(
         ()=>BonCommande, bc => bc.Event,
         {
             onDelete:'CASCADE',
@@ -68,7 +86,7 @@ export class Event {
             orphanedRowAction:'nullify'
         }
     )
-    Bon_Commande :BonCommande | number
+    Bon_Commande :BonCommande[] | number
 
     @ManyToOne(
         ()=>Lieu, lieu=>lieu.Event,
@@ -80,4 +98,14 @@ export class Event {
         }
     )
     Lieu:Lieu | number
+
+    @OneToMany(
+        () => Favoris, ev=>ev.Event,
+        {
+            onDelete:"CASCADE",
+            onUpdate:'CASCADE',
+            orphanedRowAction:'nullify'
+        }
+    )
+    Favoris: Favoris[] | number
 }

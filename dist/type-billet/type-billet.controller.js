@@ -29,6 +29,9 @@ let TypeBilletController = class TypeBilletController {
     findOne(id) {
         return this.typeBilletService.findOne(+id);
     }
+    findOneBillet(id) {
+        return this.typeBilletService.findOneBillet(+id);
+    }
     update(id, updateTypeBilletDto) {
         return this.typeBilletService.update(+id, updateTypeBilletDto);
     }
@@ -65,7 +68,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TypeBilletController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
+    (0, common_1.Get)('/billet/:idBillet'),
+    __param(0, (0, common_1.Param)('idBillet')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], TypeBilletController.prototype, "findOneBillet", null);
+__decorate([
+    (0, common_1.Patch)('updateNbBillet/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),

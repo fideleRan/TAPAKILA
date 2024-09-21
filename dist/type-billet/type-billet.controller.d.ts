@@ -9,6 +9,7 @@ export declare class TypeBilletController {
         message: string;
     }>;
     findOne(id: string): Promise<string | import("./entities/type-billet.entity").TypeBillet[]>;
+    findOneBillet(id: string): Promise<string | import("./entities/type-billet.entity").TypeBillet[]>;
     update(id: string, updateTypeBilletDto: UpdateTypeBilletDto): string;
-    remove(id: string): string;
+    remove(id: string): Promise<import("typeorm").DeleteResult>;
 }

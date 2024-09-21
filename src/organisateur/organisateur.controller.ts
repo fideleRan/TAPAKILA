@@ -63,7 +63,6 @@ export class OrganisateurController {
     schema:{
       type:'object',
       properties:{
-        Name:{type:'string',default:'org'},
         Username:{type:'string', default:'org'},
         Email:{type:'string'},
         Tel:{type:'string'},
@@ -76,7 +75,7 @@ export class OrganisateurController {
     'Profile',
     {
       storage:diskStorage({
-        destination:"public/photo/profileOrg",
+        destination:"public/photo/event",
         filename: profileOrgInterceptor
       })
     }

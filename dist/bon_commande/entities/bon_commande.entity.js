@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BonCommande = void 0;
 const event_entity_1 = require("../../event/entities/event.entity");
 const ligne_commande_entity_1 = require("../../ligne_commande/entities/ligne_commande.entity");
+const paiement_entity_1 = require("../../paiement/entities/paiement.entity");
+const type_billet_entity_1 = require("../../type-billet/entities/type-billet.entity");
 const user_entity_1 = require("../../USER/entities/user.entity");
 const typeorm_1 = require("typeorm");
 let BonCommande = class BonCommande {
@@ -22,45 +24,48 @@ __decorate([
     __metadata("design:type", Number)
 ], BonCommande.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], BonCommande.prototype, "date", void 0);
+    (0, typeorm_1.Column)({ type: "datetime", default: () => "CURRENT_TIMESTAMP" }),
+    __metadata("design:type", Date)
+], BonCommande.prototype, "Date", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], BonCommande.prototype, "heure", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], BonCommande.prototype, "totalPrice", void 0);
+], BonCommande.prototype, "nbPlace", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], BonCommande.prototype, "qrCode", void 0);
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], BonCommande.prototype, "TotalPrice", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: false }),
+    (0, typeorm_1.Column)({ default: true }),
     __metadata("design:type", Boolean)
-], BonCommande.prototype, "status", void 0);
+], BonCommande.prototype, "Status", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => user_entity_1.User, usr => usr.Bon_Commande, {
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, usr => usr.Bon_Commande, {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         orphanedRowAction: 'delete',
         eager: true
     }),
-    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Object)
 ], BonCommande.prototype, "User", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => event_entity_1.Event, evt => evt.Bon_Commande, {
+    (0, typeorm_1.ManyToOne)(() => event_entity_1.Event, evt => evt.Bon_Commande, {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         orphanedRowAction: 'delete',
         eager: true
     }),
-    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Object)
 ], BonCommande.prototype, "Event", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => type_billet_entity_1.TypeBillet, evt => evt.Bon_Commande, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        orphanedRowAction: 'delete',
+        eager: true
+    }),
+    __metadata("design:type", Object)
+], BonCommande.prototype, "Type_Billet", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => ligne_commande_entity_1.LigneCommande, lc => lc.Bon_Commande, {
         onDelete: 'CASCADE',
@@ -70,6 +75,14 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], BonCommande.prototype, "Ligne_Commande", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => paiement_entity_1.Paiement, p => p.Bon_Commande, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        orphanedRowAction: 'delete',
+    }),
+    __metadata("design:type", Object)
+], BonCommande.prototype, "Paiement", void 0);
 exports.BonCommande = BonCommande = __decorate([
     (0, typeorm_1.Entity)('bon_commande')
 ], BonCommande);

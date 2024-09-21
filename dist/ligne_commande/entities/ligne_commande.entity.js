@@ -35,7 +35,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", Number)
-], LigneCommande.prototype, "pt", void 0);
+], LigneCommande.prototype, "montant", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => bon_commande_entity_1.BonCommande, bc => bc.Ligne_Commande, {
         onDelete: 'CASCADE',

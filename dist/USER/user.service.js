@@ -41,7 +41,7 @@ let UserService = class UserService {
         }
         const user = this.fanRepository.create({
             ...createFanDto,
-            Name: randomName
+            Username: randomName
         });
         return await this.fanRepository.save(user);
     }

@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const bon_commande_entity_1 = require("../../bon_commande/entities/bon_commande.entity");
+const commentaire_entity_1 = require("../../commentaire/entities/commentaire.entity");
+const favoris_entity_1 = require("../../favoris/entities/favoris.entity");
 const typeorm_1 = require("typeorm");
 let User = class User {
 };
@@ -19,10 +21,6 @@ __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], User.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "Name", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
@@ -54,23 +52,35 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], User.prototype, "Twitter", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
 ], User.prototype, "Instagram", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: 'FAN' }),
     __metadata("design:type", String)
 ], User.prototype, "Role", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => bon_commande_entity_1.BonCommande, bc => bc.User, {
+    (0, typeorm_1.OneToMany)(() => bon_commande_entity_1.BonCommande, bc => bc.User, {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         orphanedRowAction: 'nullify'
     }),
     __metadata("design:type", Object)
 ], User.prototype, "Bon_Commande", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => favoris_entity_1.Favoris, ev => ev.User, {
+        onDelete: "CASCADE",
+        onUpdate: 'CASCADE',
+        orphanedRowAction: 'nullify'
+    }),
+    __metadata("design:type", Object)
+], User.prototype, "Favoris", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => commentaire_entity_1.Commentaire, ev => ev.User, {
+        onDelete: "CASCADE",
+        onUpdate: 'CASCADE',
+        orphanedRowAction: 'nullify'
+    }),
+    __metadata("design:type", Object)
+], User.prototype, "Commentaire", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)('user')
 ], User);

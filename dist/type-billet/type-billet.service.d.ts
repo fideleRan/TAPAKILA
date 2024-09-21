@@ -13,6 +13,7 @@ export declare class TypeBilletService {
     }>;
     findAll(): Promise<TypeBillet[]>;
     findOne(id: number): Promise<string | TypeBillet[]>;
+    findOneBillet(id: number): Promise<string | TypeBillet[]>;
     update(id: number, updateTypeBilletDto: UpdateTypeBilletDto): string;
-    remove(id: number): string;
+    remove(id: number): Promise<import("typeorm").DeleteResult>;
 }

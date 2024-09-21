@@ -1,6 +1,7 @@
+import { BonCommande } from "src/bon_commande/entities/bon_commande.entity";
 import { Event } from "src/event/entities/event.entity";
 import { LigneCommande } from "src/ligne_commande/entities/ligne_commande.entity";
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("type_billet")
 export class TypeBillet {
@@ -39,4 +40,16 @@ export class TypeBillet {
         }
     )
     Ligne_Commande:LigneCommande|number
+
+    @OneToMany(
+        ()=>BonCommande, lc=>lc.Type_Billet,
+        {
+            onDelete:'CASCADE',
+            onUpdate:'CASCADE',
+            orphanedRowAction:'nullify'
+        }
+    )
+    Bon_Commande:BonCommande[]|number
+
+
 }

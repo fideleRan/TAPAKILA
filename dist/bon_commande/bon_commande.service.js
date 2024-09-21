@@ -19,32 +19,43 @@ const bon_commande_entity_1 = require("./entities/bon_commande.entity");
 const typeorm_2 = require("typeorm");
 const event_entity_1 = require("../event/entities/event.entity");
 const user_entity_1 = require("../USER/entities/user.entity");
+const type_billet_entity_1 = require("../type-billet/entities/type-billet.entity");
 let BonCommandeService = class BonCommandeService {
-    constructor(bcRepo, eventRepo, userRepo) {
+    constructor(bcRepo, eventRepo, userRepo, billetRepo) {
         this.bcRepo = bcRepo;
         this.eventRepo = eventRepo;
         this.userRepo = userRepo;
+        this.billetRepo = billetRepo;
     }
-    async create(idEvent, idUser, createBonCommandeDto) {
+    async create(idEvent, idUser, idBillet, createBonCommandeDto) {
         const verifEvent = await this.eventRepo.findOne({ where: { id: idEvent } });
         if (!verifEvent)
             throw new common_1.NotFoundException('Cette evennemrnt n existe pas');
         const verifUser = await this.userRepo.findOne({ where: { id: idUser } });
         if (!verifUser)
             throw new common_1.NotFoundException('Cette utilisateur n existe pas');
+        const verifBillet = await this.billetRepo.findOne({ where: { id: idBillet } });
+        if (!verifBillet)
+            throw new common_1.NotFoundException('Cette billet n existe pas');
         const data = await this.bcRepo.create({
             ...createBonCommandeDto,
             Event: verifEvent,
-            User: verifUser
+            User: verifUser,
+            Type_Billet: verifBillet
         });
-        await this.bcRepo.save(data);
-        return { status: 200, message: 'Bon de commande créé avec succes' };
+        return await this.bcRepo.save(data);
     }
     findAll() {
         return this.bcRepo.find();
     }
     findOne(id) {
         return this.bcRepo.findBy({ id });
+    }
+    findOneByEvent(id) {
+        return this.bcRepo.findOneBy({ Event: id });
+    }
+    findOneByUser(id) {
+        return this.bcRepo.findOneBy({ User: id });
     }
     update(id, updateBonCommandeDto) {
         return `This action updates a #${id} bonCommande`;
@@ -59,7 +70,9 @@ exports.BonCommandeService = BonCommandeService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(bon_commande_entity_1.BonCommande)),
     __param(1, (0, typeorm_1.InjectRepository)(event_entity_1.Event)),
     __param(2, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
+    __param(3, (0, typeorm_1.InjectRepository)(type_billet_entity_1.TypeBillet)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])
 ], BonCommandeService);

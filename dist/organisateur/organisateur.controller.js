@@ -109,7 +109,6 @@ __decorate([
         schema: {
             type: 'object',
             properties: {
-                Name: { type: 'string', default: 'org' },
                 Username: { type: 'string', default: 'org' },
                 Email: { type: 'string' },
                 Tel: { type: 'string' },
@@ -120,7 +119,7 @@ __decorate([
     }),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('Profile', {
         storage: (0, multer_1.diskStorage)({
-            destination: "public/photo/profileOrg",
+            destination: "public/photo/event",
             filename: fileInterceptor_1.profileOrgInterceptor
         })
     })),

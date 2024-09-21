@@ -74,6 +74,7 @@ export class EventController {
   update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto,
   @UploadedFile() Photo:Express.Multer.File
   ) {
+    
     const dataEvent = {
       ...updateEventDto,
       Photo:Photo.filename

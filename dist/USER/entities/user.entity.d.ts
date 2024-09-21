@@ -1,7 +1,8 @@
 import { BonCommande } from "src/bon_commande/entities/bon_commande.entity";
+import { Commentaire } from "src/commentaire/entities/commentaire.entity";
+import { Favoris } from "src/favoris/entities/favoris.entity";
 export declare class User {
     id: number;
-    Name: string;
     Username: string;
     Email: string;
     Age: number;
@@ -9,8 +10,9 @@ export declare class User {
     Profile: string;
     Password: string;
     Facebook: string;
-    Twitter: string;
     Instagram: string;
     Role: string;
-    Bon_Commande: BonCommande | number;
+    Bon_Commande: BonCommande[] | number;
+    Favoris: Favoris[] | number;
+    Commentaire: Commentaire[] | number;
 }

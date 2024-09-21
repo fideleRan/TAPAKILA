@@ -14,6 +14,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { PaiementModule } from './paiement/paiement.module';
+import { CommentaireModule } from './commentaire/commentaire.module';
 
 
 
@@ -38,7 +40,7 @@ import { JwtModule } from '@nestjs/jwt';
       password: "Roptader3806",
       database: "tapakila",
       entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: true,
+      synchronize: false,
     }),
     UserModule,
     OrganisateurModule,
@@ -48,6 +50,8 @@ import { JwtModule } from '@nestjs/jwt';
     LigneCommandeModule,
     FavorisModule,
     BonCommandeModule,
+    PaiementModule,
+    CommentaireModule,
   ],
   controllers: [AppController],
   providers: [AppService],

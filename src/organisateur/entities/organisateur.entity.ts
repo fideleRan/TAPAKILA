@@ -7,9 +7,6 @@ export class Organisateur {
     id:number
 
     @Column({nullable:true})
-    Name:string
-
-    @Column({nullable:true})
     Username:string
 
     @Column()

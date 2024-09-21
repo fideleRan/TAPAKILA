@@ -47,11 +47,17 @@ let TypeBilletService = class TypeBilletService {
         return billetEvent;
         return `This action returns a #${id} typeBillet`;
     }
+    async findOneBillet(id) {
+        console.log(id);
+        const billetEvent = await this.billetRepo.findBy({ id });
+        return billetEvent;
+        return `This action returns a #${id} typeBillet`;
+    }
     update(id, updateTypeBilletDto) {
         return `This action updates a #${id} typeBillet`;
     }
     remove(id) {
-        return `This action removes a #${id} typeBillet`;
+        return this.billetRepo.delete(id);
     }
 };
 exports.TypeBilletService = TypeBilletService;

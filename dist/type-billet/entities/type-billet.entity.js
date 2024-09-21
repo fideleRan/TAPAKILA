@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TypeBillet = void 0;
+const bon_commande_entity_1 = require("../../bon_commande/entities/bon_commande.entity");
 const event_entity_1 = require("../../event/entities/event.entity");
 const ligne_commande_entity_1 = require("../../ligne_commande/entities/ligne_commande.entity");
 const typeorm_1 = require("typeorm");
@@ -53,6 +54,14 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], TypeBillet.prototype, "Ligne_Commande", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => bon_commande_entity_1.BonCommande, lc => lc.Type_Billet, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        orphanedRowAction: 'nullify'
+    }),
+    __metadata("design:type", Object)
+], TypeBillet.prototype, "Bon_Commande", void 0);
 exports.TypeBillet = TypeBillet = __decorate([
     (0, typeorm_1.Entity)("type_billet")
 ], TypeBillet);

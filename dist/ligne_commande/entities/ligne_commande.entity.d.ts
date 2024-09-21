@@ -5,7 +5,7 @@ export declare class LigneCommande {
     nameBillet: string;
     nbBillet: number;
     pu: number;
-    pt: number;
+    montant: number;
     Bon_Commande: BonCommande | number;
     Type_Billet: TypeBillet | number;
 }

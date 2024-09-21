@@ -23,6 +23,8 @@ const serve_static_1 = require("@nestjs/serve-static");
 const path_1 = require("path");
 const config_1 = require("@nestjs/config");
 const jwt_1 = require("@nestjs/jwt");
+const paiement_module_1 = require("./paiement/paiement.module");
+const commentaire_module_1 = require("./commentaire/commentaire.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -48,7 +50,7 @@ exports.AppModule = AppModule = __decorate([
                 password: "Roptader3806",
                 database: "tapakila",
                 entities: ['dist/**/*.entity{.ts,.js}'],
-                synchronize: true,
+                synchronize: false,
             }),
             user_module_1.UserModule,
             organisateur_module_1.OrganisateurModule,
@@ -58,6 +60,8 @@ exports.AppModule = AppModule = __decorate([
             ligne_commande_module_1.LigneCommandeModule,
             favoris_module_1.FavorisModule,
             bon_commande_module_1.BonCommandeModule,
+            paiement_module_1.PaiementModule,
+            commentaire_module_1.CommentaireModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

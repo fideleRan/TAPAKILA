@@ -1,30 +1,28 @@
 import { Event } from "src/event/entities/event.entity"
 import { LigneCommande } from "src/ligne_commande/entities/ligne_commande.entity"
+import { Paiement } from "src/paiement/entities/paiement.entity"
+import { TypeBillet } from "src/type-billet/entities/type-billet.entity"
 import { User } from "src/USER/entities/user.entity"
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity('bon_commande')
 export class BonCommande {
     @PrimaryGeneratedColumn()
     id:number
 
-    @Column({nullable:true})
-    date:string
+    @Column({type:"datetime", default:()=>"CURRENT_TIMESTAMP"})
+    Date:Date
 
-    @Column({nullable:true})
-    heure:string
+    @Column()
+    nbPlace:number
 
-    @Column({nullable:true})
-    totalPrice:number
+    @Column({default:0})
+    TotalPrice:number
 
-    @Column({nullable:true})
-    qrCode:string
+    @Column({default:true})
+    Status:boolean
 
-    @Column({default:false})
-    status:boolean
-
-
-    @OneToOne(
+    @ManyToOne(
         ()=> User, usr=> usr.Bon_Commande,
         {
             onDelete:'CASCADE',
@@ -33,10 +31,9 @@ export class BonCommande {
             eager:true
         }
     )
-    @JoinColumn()
     User:User | number
 
-    @OneToOne(
+    @ManyToOne(
         ()=> Event, evt=> evt.Bon_Commande,
         {
             onDelete:'CASCADE',
@@ -45,9 +42,21 @@ export class BonCommande {
             eager:true
         }
     )
-    @JoinColumn()
     Event:Event | number
 
+    @ManyToOne(
+        ()=> TypeBillet, evt=> evt.Bon_Commande,
+        {
+            onDelete:'CASCADE',
+            onUpdate:'CASCADE',
+            orphanedRowAction:'delete',
+            eager:true
+        }
+    )
+    Type_Billet:TypeBillet | number
+    
+
+    //INUTILES
     @OneToMany(
         ()=>LigneCommande, lc => lc.Bon_Commande,
         {
@@ -58,4 +67,15 @@ export class BonCommande {
         }
     )
     Ligne_Commande : LigneCommande[] | number
+
+    @OneToOne(
+        ()=>Paiement, p=>p.Bon_Commande,
+        {
+            onDelete:'CASCADE',
+            onUpdate:'CASCADE',
+            orphanedRowAction:'delete',
+            
+        }
+    )
+    Paiement:Paiement | number
 }

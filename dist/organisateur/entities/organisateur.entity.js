@@ -22,10 +22,6 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], Organisateur.prototype, "Name", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
 ], Organisateur.prototype, "Username", void 0);
 __decorate([
     (0, typeorm_1.Column)(),

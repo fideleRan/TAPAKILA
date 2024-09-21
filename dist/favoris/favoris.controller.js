@@ -22,8 +22,8 @@ let FavorisController = class FavorisController {
     constructor(favorisService) {
         this.favorisService = favorisService;
     }
-    create(createFavorisDto) {
-        return this.favorisService.create(createFavorisDto);
+    create(idEvent, idUser, CreateFavorisDto) {
+        return this.favorisService.create(+idEvent, +idUser, CreateFavorisDto);
     }
     findAll() {
         return this.favorisService.findAll();
@@ -41,9 +41,11 @@ let FavorisController = class FavorisController {
 exports.FavorisController = FavorisController;
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Query)('idEvent')),
+    __param(1, (0, common_1.Query)('idUser')),
+    __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_favoris_dto_1.CreateFavorisDto]),
+    __metadata("design:paramtypes", [String, String, create_favoris_dto_1.CreateFavorisDto]),
     __metadata("design:returntype", void 0)
 ], FavorisController.prototype, "create", null);
 __decorate([

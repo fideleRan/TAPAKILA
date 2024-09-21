@@ -10,10 +10,21 @@ import { NoFilesInterceptor } from '@nestjs/platform-express';
 export class BonCommandeController {
   constructor(private readonly bonCommandeService: BonCommandeService) {}
 
-  @Post()
-  create(@Query('idEvent') idEvent:string,@Query('idUser') idUser:string, @Body() createBonCommandeDto: CreateBonCommandeDto) {
+  @Post(":idEvent/:idUser/:idBillet")
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema:{
+      type:'object',
+      properties:{
+        TotalPrice:{type:'number'},
+        nbPlace:{type:'number'}
+      }
+    }
+  })
+  @UseInterceptors(NoFilesInterceptor())
+  create(@Param('idEvent') idEvent:string,@Param('idUser') idUser:string,@Param('idBillet') idBillet:string, @Body() createBonCommandeDto: CreateBonCommandeDto) {
     
-    return this.bonCommandeService.create(+idEvent, +idUser, createBonCommandeDto);
+    return this.bonCommandeService.create(+idEvent, +idUser,+idBillet, createBonCommandeDto);
   }
 
   @Get()
@@ -24,6 +35,16 @@ export class BonCommandeController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.bonCommandeService.findOne(+id);
+  }
+
+  @Get('user/:id')
+  findOneByUser(@Param('id') id: string) {
+    return this.bonCommandeService.findOneByUser(+id);
+  }
+
+  @Get('event/:id')
+  findOneByEvent(@Param('id') id: string) {
+    return this.bonCommandeService.findOneByEvent(+id);
   }
 
   @Patch(':id')

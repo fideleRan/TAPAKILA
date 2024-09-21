@@ -17,7 +17,7 @@ export class LigneCommande {
     pu:number
 
     @Column({nullable:false})
-    pt:number
+    montant:number
 
     @ManyToOne(
         ()=>BonCommande, bc=>bc.Ligne_Commande,
